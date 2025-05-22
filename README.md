@@ -25,3 +25,17 @@ API endpoint for player: [https://api.chess.com/pub/player/{username}](https://a
 ## ♟️ Step 3: Add Grandmaster summary
 
 On the profile page for a grandmaster that you created in step 2, add a clock that displays the amount of time since they were last online. The time since the user was active should be displayed as HH:MM:SS, and it should update every second.
+
+## 🔍 Personal Notes and Potential Improvements
+
+I've completed the challenge as requested, but I would like to highlight several areas where the application could be enhanced:
+
+- **State Management**: Implementing Redux to store the list of grandmasters would prevent unnecessary API calls when navigating back to the listing page.
+- **Search Functionality**: Adding a search feature would improve user experience when looking for specific grandmasters.
+- **Enhanced Pagination**: A more interactive pagination system could make navigating through the large list of grandmasters more efficient.
+- **Loading States**: Better loading states and error handling throughout the application.
+- **Responsive Design**: Further optimizations for different screen sizes.
+- **Caching Strategy**: Implementing a caching mechanism for frequently accessed profiles.
+- **Performance Optimizations**: Code splitting and lazy loading for better initial load times.
+
+These improvements would significantly enhance the user experience and overall application performance, but were beyond the scope of the initial challenge requirements.
