@@ -7,7 +7,8 @@ function App() {
     <BrowserRouter>
       <div className="flex flex-col min-h-screen w-full bg-gradient-to-b from-blue-50 to-white">
         <header className="bg-blue-600 text-white py-4 shadow-md">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto px-4 flex items-center">
+            <img src="/chess.svg" alt="Chess Logo" className="w-8 h-8 mr-2" />
             <h1 className="text-2xl font-bold">Chess Grandmasters Wiki</h1>
           </div>
         </header>
