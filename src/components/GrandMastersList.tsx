@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Pagination from './Pagination';
 
 const ITEMS_PER_PAGE = 20;
@@ -8,6 +9,7 @@ const GrandMastersList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchGrandMasters = async () => {
@@ -39,6 +41,10 @@ const GrandMastersList = () => {
     setCurrentPage(page);
   };
 
+  const handleProfileClick = (username: string) => {
+    navigate(`/profile/${username}`);
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -65,7 +71,7 @@ const GrandMastersList = () => {
           <div 
             key={username}
             className="bg-white rounded-md shadow-md p-6 hover:shadow-lg transition-shadow duration-300 cursor-pointer border border-gray-100"
-            onClick={() => window.location.href = `/profile/${username}`}
+            onClick={() => handleProfileClick(username)}
           >
             <div className="flex items-center">
               <div className="flex-shrink-0 h-12 w-12 bg-primary-100 rounded-full flex items-center justify-center text-primary-700 font-semibold">
