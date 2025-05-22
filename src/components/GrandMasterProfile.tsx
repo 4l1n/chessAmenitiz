@@ -28,6 +28,7 @@ const GrandMasterProfile = () => {
   const [profile, setProfile] = useState<PlayerProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [timeElapsed, setTimeElapsed] = useState<string>('00:00:00');
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -52,6 +53,35 @@ const GrandMasterProfile = () => {
       fetchProfile();
     }
   }, [username]);
+  
+  useEffect(() => {
+    if (!profile?.last_online) return;
+    
+    const lastOnlineDate = new Date(profile.last_online * 1000);
+    const initialDiffInSeconds = Math.floor((new Date().getTime() - lastOnlineDate.getTime()) / 1000);
+    let elapsedSeconds = initialDiffInSeconds;
+    
+    const formatTime = (totalSeconds: number) => {
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+      
+      return [
+        hours.toString().padStart(2, '0'),
+        minutes.toString().padStart(2, '0'),
+        seconds.toString().padStart(2, '0')
+      ].join(':');
+    };
+    
+    setTimeElapsed(formatTime(elapsedSeconds));
+    
+    const intervalId = setInterval(() => {
+      elapsedSeconds += 1;
+      setTimeElapsed(formatTime(elapsedSeconds));
+    }, 1000);
+    
+    return () => clearInterval(intervalId);
+  }, [profile?.last_online]);
 
   if (loading) {
     return (
@@ -140,6 +170,18 @@ const GrandMasterProfile = () => {
         </div>
         
         <div className="p-6">
+          <div className="bg-yellow-100 rounded-md p-4 mb-6 flex items-center justify-between">
+            <div className="flex items-center">
+              <svg className="w-6 h-6 text-yellow-800 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span className="text-yellow-800 font-medium">Time since last online:</span>
+            </div>
+            <div className="bg-white px-4 py-2 rounded-md font-mono text-lg font-bold text-yellow-800 border border-yellow-300">
+              {timeElapsed}
+            </div>
+          </div>
+          
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-gray-50 p-4 rounded-md">
               <h2 className="text-lg font-semibold mb-3 text-gray-700">Player Information</h2>
